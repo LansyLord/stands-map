@@ -13,10 +13,10 @@
     <p>Status: {{ stand.status }}</p>
 
     <div class="actions">
-        <button (click)="save()">Salvar</button>
-        <button *ngIf="stand.status === 'available'" (click)="buy()">
-            Comprar
-        </button>
-        <button (click)="onClose.emit()">Fechar</button>
-    </div>
+    <button class="save" (click)="save()">Salvar</button>
+    <button class="buy" *ngIf="stand.status === 'available'" (click)="buy()">
+        Comprar
+    </button>
+    <button class="close" (click)="onClose.emit()">Fechar</button>
+</div>
 </div>

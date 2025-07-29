@@ -9,13 +9,20 @@ import { Stand } from 'src/app/models/stand.model';
   styleUrls: ['./map-container.component.scss']
 })
 export class MapContainerComponent {
-  stands$ = this.standService.stands$; // Async pipe vai lidar com a inscrição
+  stands$ = this.standService.stands$;
   selectedStand: Stand | null = null;
 
   constructor(private standService: StandService) { }
 
-  addNewStand(): void {
-    this.standService.addStand();
+  openNewStandEditor(): void {
+    this.selectedStand = {
+      id: '',
+      name: '',
+      description: '',
+      logoUrl: '',
+      status: 'available',
+      position: { x: 20, y: 20 }
+    };
   }
 
   onStandMoved(event: CdkDragEnd, standId: string): void {
@@ -24,7 +31,6 @@ export class MapContainerComponent {
   }
 
   selectStand(stand: Stand): void {
-    // Criamos uma cópia para evitar alteração direta no objeto original
     this.selectedStand = { ...stand };
   }
 
@@ -32,8 +38,12 @@ export class MapContainerComponent {
     this.selectedStand = null;
   }
 
-  saveStandChanges(updatedStand: Stand): void {
-    this.standService.updateStand(updatedStand);
+  saveStandChanges(standToSave: Stand): void {
+    if (standToSave.id) {
+      this.standService.updateStand(standToSave);
+    } else {
+      this.standService.addStand(standToSave);
+    }
     this.closeEditor();
   }
 

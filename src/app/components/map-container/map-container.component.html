@@ -6,8 +6,12 @@
     cdkDrag [cdkDragFreeDragPosition]="stand.position" (cdkDragEnded)="onStandMoved($event, stand.id)" [ngClass]="stand.status">
   </app-stand>
 </div>
-<button (click)="addNewStand()">Adicionar Stand</button>
 
-<app-stand-editor *ngIf="selectedStand" [stand]="selectedStand" (onClose)="closeEditor()"
-    (onSave)="saveStandChanges($event)" (onBuy)="buyStand($event)">
+<button (click)="openNewStandEditor()">Adicionar Stand</button>
+
+<app-stand-editor *ngIf="selectedStand"
+    [stand]="selectedStand"
+    (onClose)="closeEditor()"
+    (onSave)="saveStandChanges($event)"
+    (onBuy)="buyStand($event)">
 </app-stand-editor>

@@ -26,16 +26,15 @@ export class StandService {
   }
 
   // Método para adicionar um novo stand
-  addStand(): void {
+  addStand(standData: Omit<Stand, 'id'>): void {
     const currentStands = this._stands$.getValue();
-    const newStand: Stand = {
-      id: new Date().getTime().toString(), // ID simples baseado no tempo
-      name: 'Novo Stand',
-      description: '',
-      status: 'available',
-      position: { x: 10, y: 10 }
+
+    const standToAdd: Stand = {
+      ...standData,
+      id: new Date().getTime().toString()
     };
-    this._stands$.next([...currentStands, newStand]);
+
+    this._stands$.next([...currentStands, standToAdd]);
   }
 
   updateStandPosition(id: string, newPosition: { x: number; y: number }): void {

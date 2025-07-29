@@ -6,26 +6,24 @@ import { Stand } from '../models/stand.model';
   providedIn: 'root'
 })
 export class StandService {
-  // '_' e '$' são convenções para streams/observables privados
   private readonly _stands$ = new BehaviorSubject<Stand[]>([]);
 
-  // Expondo o Observable publicamente (somente para leitura)
   public readonly stands$ = this._stands$.asObservable();
 
   constructor() {
-    // Carga inicial de dados para teste
     this.loadInitialStands();
   }
 
   private loadInitialStands(): void {
     const initialStands: Stand[] = [
-      { id: '1', name: 'Stand A', description: 'Descrição A', status: 'available', position: { x: 50, y: 50 } },
-      { id: '2', name: 'Stand B', description: 'Descrição B', logoUrl: "https://upload.wikimedia.org/wikipedia/commons/thumb/f/fa/Apple_logo_black.svg/732px-Apple_logo_black.svg.png", status: 'available', position: { x: 200, y: 100 } },
+      { id: '1', name: 'Razer', description: 'Descrição A', logoUrl: "https://cdn.worldvectorlogo.com/logos/razer.svg", status: 'available', position: { x: 50, y: 50 } },
+      { id: '2', name: 'Apple', description: 'Descrição B', logoUrl: "https://upload.wikimedia.org/wikipedia/commons/thumb/f/fa/Apple_logo_black.svg/732px-Apple_logo_black.svg.png", status: 'available', position: { x: 200, y: 100 } },
+      { id: '3', name: 'Acer', description: 'Descrição C', logoUrl: "https://logodownload.org/wp-content/uploads/2014/09/acer-logo-1.png", status: 'occupied', position: { x: 300, y: 200 } },
+
     ];
     this._stands$.next(initialStands);
   }
 
-  // Método para adicionar um novo stand
   addStand(standData: Omit<Stand, 'id'>): void {
     const currentStands = this._stands$.getValue();
 
@@ -42,7 +40,6 @@ export class StandService {
     const standIndex = currentStands.findIndex(s => s.id === id);
 
     if (standIndex > -1) {
-      // Criar um novo array para imutabilidade e detecção de mudanças
       const updatedStands = [...currentStands];
       updatedStands[standIndex] = { ...updatedStands[standIndex], position: newPosition };
       this._stands$.next(updatedStands);
@@ -64,7 +61,6 @@ export class StandService {
     const index = stands.findIndex(s => s.id === id);
     if (index !== -1) {
       const newStands = [...stands];
-      // Marca como ocupado
       newStands[index] = { ...newStands[index], status: 'occupied' };
       this._stands$.next(newStands);
     }

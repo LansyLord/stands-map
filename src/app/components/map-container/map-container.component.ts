@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, ElementRef, ViewChild } from '@angular/core';
 import { StandService } from '../../services/stand.service';
 import { CdkDragEnd } from '@angular/cdk/drag-drop';
 import { Stand } from 'src/app/models/stand.model';
@@ -22,10 +22,43 @@ export class MapContainerComponent {
   private panStartY = 0;
 
 
+  @ViewChild('fileInput') fileInput!: ElementRef;
+
+  @ViewChild('mapArea') mapAreaRef!: ElementRef<HTMLDivElement>;
+
+  mapBackgroundUrl: string | null = null;
+
+  mapWidth: number | null = null;
+  mapHeight: number | null = null;
+
+
   constructor(private standService: StandService) { }
 
   get mapTransform(): string {
     return `translate(${this.mapOffsetX}px, ${this.mapOffsetY}px) scale(${this.scale})`;
+  }
+
+  get dynamicMapStyle() {
+    if (this.mapWidth && this.mapHeight) {
+      return {
+        'width.px': this.mapWidth,
+        'height.px': this.mapHeight,
+      };
+    }
+    return {};
+  }
+
+  resetView(): void {
+    this.scale = 1;
+    this.mapOffsetX = 0;
+    this.mapOffsetY = 0;
+  }
+
+  removeBackground(): void {
+    this.mapBackgroundUrl = null;
+    this.mapWidth = null;
+    this.mapHeight = null;
+    this.resetView();
   }
 
 
@@ -106,5 +139,46 @@ export class MapContainerComponent {
   buyStand(standId: string): void {
     this.standService.buyStand(standId);
     this.closeEditor();
+  }
+
+  triggerFileInput(): void {
+    this.fileInput.nativeElement.click();
+  }
+
+  onFileSelected(event: Event): void {
+    const input = event.target as HTMLInputElement;
+
+    if (input.files && input.files[0]) {
+      const file = input.files[0];
+      const reader = new FileReader();
+
+      reader.onload = () => {
+        const dataUrl = reader.result as string;
+        this.mapBackgroundUrl = dataUrl;
+
+        const img = new Image();
+        img.onload = () => {
+
+          const container = this.mapAreaRef.nativeElement;
+          const maxWidth = container.clientWidth;
+          const maxHeight = container.clientHeight;
+
+          const imageRatio = img.naturalWidth / img.naturalHeight;
+          const containerRatio = maxWidth / maxHeight;
+
+          if (imageRatio > containerRatio) {
+            this.mapWidth = maxWidth;
+            this.mapHeight = maxWidth / imageRatio;
+          } else {
+            this.mapHeight = maxHeight;
+            this.mapWidth = maxHeight * imageRatio;
+          }
+        };
+        img.src = dataUrl;
+        this.resetView();
+      };
+      reader.readAsDataURL(file);
+      input.value = '';
+    }
   }
 }

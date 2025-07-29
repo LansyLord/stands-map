@@ -1,3 +1,2 @@
-<div class="stand-box">
-  {{ standData.name }}
-</div>
+  <span>{{ standData.name }}</span>
+  <img *ngIf="standData.logoUrl" class="stand-logo" [src]="standData.logoUrl" alt="Logo">

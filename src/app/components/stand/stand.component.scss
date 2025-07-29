@@ -1,21 +1,30 @@
 :host {
   position: absolute; 
-  display: block; 
-  
-  width: 100px;
-  height: 60px;
-  border: 1px solid #333;
-  cursor: move;
-  background-color: #a7f3d0;
-  
   display: flex;
   justify-content: center;
   align-items: center;
+  
+  width: 120px;
+  height: 80px;
+  border: 1px solid #333;
+  cursor: move;
+  background-color: #a7f3d0;
   font-weight: 500;
   color: #333;
+  padding: 4px;
+  box-sizing: border-box;
+
+  flex-direction: column; 
+  gap: 4px; 
 
   &.occupied {
     background-color: #fca5a5;
     cursor: not-allowed;
   }
+}
+
+.stand-logo {
+  max-width: 80%;
+  max-height: 35px; 
+  object-fit: contain;
 }

@@ -20,7 +20,7 @@ export class StandService {
   private loadInitialStands(): void {
     const initialStands: Stand[] = [
       { id: '1', name: 'Stand A', description: 'Descrição A', status: 'available', position: { x: 50, y: 50 } },
-      { id: '2', name: 'Stand B', description: 'Descrição B', status: 'available', position: { x: 200, y: 100 } },
+      { id: '2', name: 'Stand B', description: 'Descrição B', logoUrl: "https://upload.wikimedia.org/wikipedia/commons/thumb/f/fa/Apple_logo_black.svg/732px-Apple_logo_black.svg.png", status: 'available', position: { x: 200, y: 100 } },
     ];
     this._stands$.next(initialStands);
   }

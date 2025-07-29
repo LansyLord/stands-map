@@ -1,0 +1,13 @@
+<div class="map-area">
+  <app-stand
+    *ngFor="let stand of stands$ | async"
+    [standData]="stand"
+    (click)="selectStand(stand)"
+    cdkDrag [cdkDragFreeDragPosition]="stand.position" (cdkDragEnded)="onStandMoved($event, stand.id)" [ngClass]="stand.status">
+  </app-stand>
+</div>
+<button (click)="addNewStand()">Adicionar Stand</button>
+
+<app-stand-editor *ngIf="selectedStand" [stand]="selectedStand" (onClose)="closeEditor()"
+    (onSave)="saveStandChanges($event)" (onBuy)="buyStand($event)">
+</app-stand-editor>

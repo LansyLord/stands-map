@@ -1,0 +1,13 @@
+.stand-box {
+  position: absolute;
+  width: 100px;
+  height: 60px;
+  border: 1px solid #333;
+  cursor: move;
+  background-color: #a7f3d0;
+
+  &.occupied {
+    background-color: #fca5a5;
+    cursor: not-allowed;
+  }
+}

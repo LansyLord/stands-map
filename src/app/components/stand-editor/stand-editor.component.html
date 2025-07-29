@@ -1,0 +1,22 @@
+<div class="editor-panel">
+    <h3>Editar Stand</h3>
+    <label>Nome:</label>
+    <input [(ngModel)]="stand.name" />
+
+    <label>Descrição:</label>
+    <textarea [(ngModel)]="stand.description"></textarea>
+
+    <label>URL da Logo:</label>
+    <input [(ngModel)]="stand.logoUrl" />
+    <img *ngIf="stand.logoUrl" [src]="stand.logoUrl" alt="Logo" width="100" />
+
+    <p>Status: {{ stand.status }}</p>
+
+    <div class="actions">
+        <button (click)="save()">Salvar</button>
+        <button *ngIf="stand.status === 'available'" (click)="buy()">
+            Comprar
+        </button>
+        <button (click)="onClose.emit()">Fechar</button>
+    </div>
+</div>

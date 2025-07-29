@@ -1,12 +1,27 @@
-<div class="map-area" #mapArea>
-  <app-stand
-    *ngFor="let stand of stands$ | async"
-    [standData]="stand"
-    (click)="selectStand(stand)"
-    cdkDrag [cdkDragFreeDragPosition]="stand.position" (cdkDragEnded)="onStandMoved($event, stand.id)" [ngClass]="stand.status" [cdkDragBoundary]="mapArea">
-  </app-stand>
-</div>
+<div 
+  class="map-area" 
+  #mapArea
+  (wheel)="onWheel($event)"
+  (mousedown)="onMouseDown($event)"
+  (mousemove)="onMouseMove($event)"
+  (mouseup)="onMouseUp()"
+  (mouseleave)="onMouseUp()"
+  [class.panning]="isPanning">
 
+  <div class="map-content" [style.transform]="mapTransform">
+    <app-stand
+      *ngFor="let stand of stands$ | async"
+      [standData]="stand"
+      (click)="selectStand(stand)"
+      cdkDrag
+      [cdkDragFreeDragPosition]="stand.position"
+      (cdkDragEnded)="onStandMoved($event, stand.id)"
+      [cdkDragBoundary]="mapArea"
+      [ngClass]="stand.status">
+    </app-stand>
+  </div>
+
+</div>
 <button (click)="openNewStandEditor()">Adicionar Stand</button>
 
 <app-stand-editor *ngIf="selectedStand"

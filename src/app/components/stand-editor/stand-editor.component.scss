@@ -1,4 +1,3 @@
-// 1. Animação atualizada para deslizar da esquerda
 @keyframes slide-in-from-left {
   from {
     transform: translateX(-100%);
@@ -9,17 +8,15 @@
 }
 
 .editor-panel {
-  // 2. Posição alterada para a esquerda
   position: fixed;
   top: 0;
-  left: 0; // Alterado de 'right' para 'left'
+  left: 0; 
   width: 100%;
   max-width: 400px;
   height: 100vh;
-
+  z-index: 2;
   background-color: #ffffff;
-  // 3. Sombra invertida
-  box-shadow: 5px 0 20px rgba(0, 0, 0, 0.1); // Alterado de '-5px' para '5px'
+  box-shadow: 5px 0 20px rgba(0, 0, 0, 0.1); 
   padding: 2rem;
   box-sizing: border-box;
 
@@ -27,7 +24,6 @@
   flex-direction: column;
   gap: 1.25rem;
 
-  // 4. Usando a nova animação
   animation: slide-in-from-left 0.35s ease-out forwards;
 }
 

@@ -1,5 +1,5 @@
 <div class="editor-panel">
-    <h3>Editar Stand</h3>
+    <h3>{{ stand.id ? 'Editar Stand' : 'Adicionar Stand' }}</h3>
     <label>Nome:</label>
     <input [(ngModel)]="stand.name" />
 
